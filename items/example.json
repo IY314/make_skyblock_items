@@ -2,7 +2,7 @@
     "skyblock_item": true,
     "name": "Example Sword",
     "item": "minecraft:diamond_sword",
-    "type": "sword",
+    "type": "SWORD",
     "reforges": ["reforges.Sharp"],
     "stats": {
         "stats.damage": "+500",
