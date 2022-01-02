@@ -1,0 +1,7 @@
+{
+    "common": ["COMMON", "f"],
+    "uncommon": ["UNCOMMON", "a"],
+    "rare": ["RARE", "9"],
+    "epic": ["EPIC", "5"],
+    "legendary": ["LEGENDARY", "5"]
+}

@@ -1,0 +1,7 @@
+{
+    "Sharp": {
+        "name": "Sharp",
+        "stats.crit_chance": "+25%",
+        "stats.crit_dmg": "+90%"
+    }
+}

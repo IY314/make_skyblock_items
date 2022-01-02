@@ -1,0 +1,17 @@
+{
+    "skyblock_item": true,
+    "name": "Example Sword",
+    "item": "minecraft:diamond_sword",
+    "type": "sword",
+    "reforges": ["reforges.Sharp"],
+    "stats": {
+        "stats.damage": "+500",
+        "stats.strength": "+100"
+    },
+    "enchantments": {
+        "Sharpness": ["enchantments.Sharpness", 5, "sharpness"],
+        "Critical": ["enchantments.Critical", 5],
+        "First Strike": ["enchantments.First Strike", 4]
+    },
+    "rarity": "rarity.rare"
+}
