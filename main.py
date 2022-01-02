@@ -1,7 +1,6 @@
 from argparse import ArgumentParser
 import json
 import re
-from re import Match
 
 
 ROMAN_VALUES = [
@@ -165,7 +164,7 @@ class SkyblockItem:
                 text['text'] = s
                 if not is_seq:
                     text['color'] = default_color
-                result.append(text)
+                result.append(text.copy())
                 text.clear()
                 is_seq = False
         return json.dumps(result)
@@ -177,14 +176,20 @@ class SkyblockItem:
         result += f'{target} {self.item}'
         enchantments = []
         display_enchantments = []
-        name = {'text': self.name, 'color': self.rarity[1], 'italic': False}
+        name = {
+            'text': f'{" ".join(self.reforges)} {self.name}',
+            'color': COLOR_VALUES[self.rarity[1]],
+            'italic': False
+        }
         lore = []
 
         for stat in self.final_stats:
             quantifier = str(self.final_stats[stat][0])
+            if not quantifier.startswith('-'):
+                quantifier = f'+{quantifier}'
             if self.final_stats[stat][1]:
                 quantifier += '%'
-            line = [{'text': f'{stat} ', 'color': 'gray', 'italic': False},
+            line = [{'text': f'{stat}: ', 'color': 'gray', 'italic': False},
                     {'text': quantifier, 'color': 'red', 'italic': False}]
             for reforge, ref_stats in self.reforges.items():
                 if stat in ref_stats:
@@ -194,7 +199,7 @@ class SkyblockItem:
                         'italic': False
                     })
             lore.append(json.dumps(line))
-        lore.append('')
+        lore.append('[{"text": ""}]')
 
         for ench, (desc, lvl, vanilla) in self.enchantments.items():
             if vanilla is not None:
@@ -212,7 +217,7 @@ class SkyblockItem:
                         'italic': False
                     }))
                     line = ''
-            lore.append('')
+            lore.append('[{"text": ""}]')
         else:
             for ench, lvl, desc in display_enchantments:
                 lore.append(json.dumps({
@@ -221,7 +226,7 @@ class SkyblockItem:
                     'italic': False
                 }))
                 lore.append(self.format_colors(desc))
-                lore.append('')
+                lore.append('[{"text": ""}]')
         
         lore.append(json.dumps({
             'text': f'{self.rarity[0]} {self.type}',
@@ -231,7 +236,7 @@ class SkyblockItem:
         }))
 
         result += f'{{display:{{Name:{json.dumps(name)!r},'
-        result += f'Lore:{json.dumps(lore)}}},Unbreakable:true,'
+        result += f'Lore:{lore}}},Unbreakable:true,HideFlags:63,'
         result += f'Enchantments:{json.dumps(enchantments)}}}'
         return result
 
