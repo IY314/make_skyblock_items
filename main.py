@@ -277,20 +277,13 @@ def send_to_output(args, cmd):
         print(cmd)
 
 
-def run(args):
-    item = get_data(args)
-    if not isinstance(item, SkyblockItem):
-        return {'error': 'not a Skyblock item formatted file'}
-    cmd = item.give_cmd(args)
-    return {'error': None, 'result': cmd}
-
-
 def main():
     args = parse_args()
-    response = run(args)
-    if error := response.get('error'):
-        raise Exception(error)
-    send_to_output(args, response['result'])
+    item = get_data(args)
+    if not isinstance(item, SkyblockItem):
+        raise TypeError('Not a Skyblock item formatted file')
+    cmd = item.give_cmd(args)
+    send_to_output(args, cmd)
 
 
 if __name__ == '__main__':
