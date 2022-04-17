@@ -3,15 +3,34 @@
     "name": "Example Sword",
     "item": "minecraft:diamond_sword",
     "type": "SWORD",
-    "reforges": ["reforges.Sharp"],
+    "reforges": [
+        "reforges.Sharp"
+    ],
     "stats": {
         "stats.damage": "+500",
         "stats.strength": "+100"
     },
     "enchantments": {
-        "Sharpness": ["enchantments.Sharpness", 5, "sharpness"],
-        "Critical": ["enchantments.Critical", 5],
-        "First Strike": ["enchantments.First Strike", 4]
+        "Sharpness": [
+            "enchantments.Sharpness",
+            5,
+            "minecraft:sharpness"
+        ],
+        "Critical": [
+            "enchantments.Critical",
+            5
+        ],
+        "First Strike": [
+            "enchantments.First Strike",
+            4
+        ]
+    },
+    "modifiers": {
+        "generic.attack_damage": {
+            "operation": 0,
+            "amount": 100,
+            "slot": "mainhand"
+        }
     },
     "rarity": "rarity.rare"
 }

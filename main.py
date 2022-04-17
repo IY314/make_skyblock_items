@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import json
+import random
 import re
 
 
@@ -54,6 +55,7 @@ class SkyblockItem:
         self.enchantments = {}
         self.reforges = {}
         self.stats = {}
+        self.modifiers = []
 
         for kw in kwargs:
             if kw == 'skyblock_item':
@@ -62,7 +64,7 @@ class SkyblockItem:
                 setattr(self, kw, kwargs[kw])
             elif kw == 'rarity':
                 setattr(self, kw, self.resolve_ref(kwargs[kw]))
-            elif kw in ('enchantments', 'stats', 'reforges'):
+            elif kw in ('enchantments', 'stats', 'reforges', 'modifiers'):
                 getattr(self, f'get_{kw}')(kwargs[kw])
 
         self.final_stats = self.calculate_stats()
@@ -113,6 +115,15 @@ class SkyblockItem:
             del reforge['name']
             stats = self.get_stats(reforge, 'return')
             self.reforges[name] = stats
+    
+    def get_modifiers(self, dct):
+        for k in dct:
+            self.modifiers.append({
+                'AttributeName': k,
+                'Name': k,
+                **{k.title(): v for k, v in dct[k].items()},
+                'UUID': [random.randint(0, 1000000) for _ in range(4)]
+            })
 
     def calculate_stats(self):
         stats = {}
@@ -235,9 +246,21 @@ class SkyblockItem:
             'italic': False
         }))
 
+        modifiers = []
+
+        for modifier in self.modifiers:
+            mod = []
+            for k, v in modifier.items():
+                if k == 'UUID':
+                    mod.append(f'UUID:[I;{",".join((str(i) for i in v))}]')
+                else:
+                    mod.append(f'{k}:{json.dumps(v)}')
+
+            modifiers.append(f'{{{",".join(mod)}}}')
+
         result += f'{{display:{{Name:{json.dumps(name)!r},'
         result += f'Lore:{lore}}},Unbreakable:true,HideFlags:63,'
-        result += f'Enchantments:{json.dumps(enchantments)}}}'
+        result += f'Enchantments:{json.dumps(enchantments)},AttributeModifiers:[{",".join(modifiers)}]}}'
         return result
 
 
