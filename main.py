@@ -43,9 +43,9 @@ COLOR_VALUES = {
 def int_to_roman(number):
     result = []
     for value, symbol in ROMAN_VALUES:
-        quotient, remainder = divmod(number, value)
+        quotient, number = divmod(number, value)
         result.append(symbol * quotient)
-        if remainder == 0:
+        if number == 0:
             break
     return ''.join(result)
 
@@ -56,6 +56,7 @@ class SkyblockItem:
         self.reforges = {}
         self.stats = {}
         self.modifiers = []
+        self.nbt = {}
 
         for kw in kwargs:
             if kw == 'skyblock_item':
@@ -66,14 +67,23 @@ class SkyblockItem:
                 setattr(self, kw, self.resolve_ref(kwargs[kw]))
             elif kw in ('enchantments', 'stats', 'reforges', 'modifiers'):
                 getattr(self, f'get_{kw}')(kwargs[kw])
+            elif kw == 'nbt':
+                self.nbt = kwargs[kw]
+
 
         self.final_stats = self.calculate_stats()
 
     @classmethod
-    def resolve_ref(cls, string):
+    def resolve_ref(cls, string: str):
         path = string.split('.')
+        first = path[0].split(':')
+        if len(first) == 1:
+            first.insert(0, 'items')
+        elif len(first) > 2:
+            raise ValueError(f'Invalid reference {string!r}')
+
         try:
-            with open(f'items/{path[0]}.json') as f:
+            with open(f'{"/".join(first)}.json') as f:
                 data = json.load(f)
                 for name in path[1:]:
                     data = data[name]
@@ -135,7 +145,7 @@ class SkyblockItem:
                 percent = False
                 value = int(quantifier)
 
-            stats[stat] = value, percent
+            stats[stat] = [value, percent]
 
         for ref_stats in self.reforges.values():
             for stat, quantifier in ref_stats.items():
@@ -260,7 +270,8 @@ class SkyblockItem:
 
         result += f'{{display:{{Name:{json.dumps(name)!r},'
         result += f'Lore:{lore}}},Unbreakable:true,HideFlags:63,'
-        result += f'Enchantments:{json.dumps(enchantments)},AttributeModifiers:[{",".join(modifiers)}]}}'
+        result += f'Enchantments:{json.dumps(enchantments)},AttributeModifiers:[{",".join(modifiers)}],'
+        result += ','.join((f'{k}:{v!r}' for k, v in self.nbt.items())) + '}'
         return result
 
 

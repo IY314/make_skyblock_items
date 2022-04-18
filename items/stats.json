@@ -1,10 +1,34 @@
 {
-    "strength": ["Strength", ":c{❁Strength}"],
-    "damage": ["Damage", ":c{❁Damage}"],
-    "health": ["Health", ":c{❤Health}"],
-    "defense": ["Defense", ":a{❈Defense}"],
-    "speed": ["Speed", ":f{✦Speed}"],
-    "intelligence": ["Intelligence", ":b{✎Intelligence}"],
-    "crit_chance": ["Crit Chance", ":9{☣Crit Chance}"],
-    "crit_dmg": ["Crit Damage", ":9{☠Crit Damage}"]
+    "strength": [
+        "Strength",
+        ":c{❁Strength}"
+    ],
+    "damage": [
+        "Damage",
+        ":c{❁Damage}"
+    ],
+    "health": [
+        "Health",
+        ":c{❤Health}"
+    ],
+    "defense": [
+        "Defense",
+        ":a{❈Defense}"
+    ],
+    "speed": [
+        "Speed",
+        ":f{✦Speed}"
+    ],
+    "intelligence": [
+        "Intelligence",
+        ":b{✎Intelligence}"
+    ],
+    "crit_chance": [
+        "Crit Chance",
+        ":9{☣Crit Chance}"
+    ],
+    "crit_dmg": [
+        "Crit Damage",
+        ":9{☠Crit Damage}"
+    ]
 }

@@ -1,5 +1,7 @@
 {
     "Sharpness": "Increases melee damage dealt by :a{5%} per level.",
     "Critical": "Increases crit damage by :a{10%} per level.",
-    "First Strike": "Increases the first melee damage dealt to a mob by :a{25%} per level."
+    "First Strike": "Increases the first melee damage dealt to a mob by :a{25%} per level.",
+    "Protection": "Grants :a{+3 ❈Defense} per level.",
+    "Growth": "Grants 15 :c{❤Health} per level."
 }

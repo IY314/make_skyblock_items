@@ -36,7 +36,7 @@ cd make_skyblock_items
 ```
 ### Explanation:
 #### **A Note about References:**
-This example uses references such as `reforges.Sharp` and `stats.damage`. The program will look at a certain reference `abc.def.ghi` as "Look for `ghi` in the object `def` in the JSON file `abc` that resides in the directory `items`. Substitute `ghi` as the value instead of this reference."
+This example uses references such as `reforges.Sharp` and `stats.damage`. The program will look at a certain reference `abc:def.ghi.jkl` as "Look for `jkl` in the object `ghi` in the JSON file `def` that resides in the directory `abc`, where `abc` can be omitted and has a default value of the `items` directory. Substitute `jkl` as the value instead of this reference."
 
 References can be used to reuse JSON code when making your items. The files included within the `items` directly are updated periodically to include enchantments, reforges, stat names, and rarities from Skyblock.
 1. Declare that, yes, this is a Skyblock item file. (`skyblock_item`)
